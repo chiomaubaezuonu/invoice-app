@@ -25,6 +25,20 @@ app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`);
 });
 
+app.get("/invoice/:id", async(req, res) => {
+  try {
+    const { id } = req.params
+    const invoice = await Invoice.findById(id)
+
+    if(!invoice){
+      return res.status(404).json({message: "Invoice not found"})
+    }
+    res.status(200).json(invoice)
+  } catch (error) {
+   res.status(500).json({message: "Something went wrong", error: error.message})
+  }
+} )
+
 app.post("/invoice", async (req, res) => {
   try {
     const newInvoiceData = req.body;
@@ -40,6 +54,7 @@ app.post("/invoice", async (req, res) => {
     });
   }
 });
+
 
 app.put("/invoice/:id", async (req, res) => {
   const invoiceId = req.params.id;
