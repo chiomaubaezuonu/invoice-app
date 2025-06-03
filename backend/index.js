@@ -72,3 +72,11 @@ res.status(200).json({message: "Invoice updated successfully",
   })
 }
  })
+
+ //for delete request
+app.delete('/invoice/:id', (req,res) => {
+    const {id} = req.params;
+    Invoice.findByIdAndDelete({_id: id})
+    .then(result => res.json(result))
+    .then(err => res.json(err))
+})
