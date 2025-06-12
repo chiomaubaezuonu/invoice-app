@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-type Invoice = {
+export type Invoice = {
   id: string;
   // _id?: string;
   _id: string;

@@ -94,11 +94,10 @@
   padding: 3.563rem 0;
   width: 100%;
 }
-a{
+a {
   text-decoration: none;
 }
 .invoices {
-
 }
 .invoice {
   width: 56.15rem;
@@ -110,7 +109,26 @@ a{
   transition: transform 0.15s ease-in;
   padding: 1.25rem 1.85rem;
 }
-
+.invoice-detail-container {
+  margin-top: 5rem;
+  width: 56.15385rem;
+  padding: 1.85rem;
+}
+.goBack-arrow-div {
+  display: flex;
+  align-items: center;
+  gap: 0 1.82rem;
+  font-weight: 700;
+  color: #141624;
+  margin-bottom: 2.4rem;
+  cursor: pointer;
+}
+.invoiceDetail-header{
+      background-color: var(--box-bg);
+    padding: 1.5rem 2.5rem;
+    box-shadow: 0 10px 10px -10px #48549f1a;
+    display: flex;
+}
 @media screen and (max-width: 768px) {
   .sidebar {
     width: 100%;
