@@ -102,7 +102,6 @@ a{
 }
 .invoice {
   width: 56.15rem;
-  background-color: var(--box-bg);
   border-radius: 0.5rem;
   box-shadow: 0 10px 10px -10px #48549f1a;
   display: grid;
