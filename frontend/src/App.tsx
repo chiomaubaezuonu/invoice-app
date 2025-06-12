@@ -1,15 +1,46 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+
+type Invoice = {
+  id: string;
+  _id?: string; 
+  createdAt: string;
+  paymentDue: string;
+  description: string;
+  paymentTerms: number;
+  clientName: string;
+  clientEmail: string;
+  status: "draft" | "pending" | "paid";
+  senderAddress: {
+    street: string;
+    city: string;
+    postCode: string;
+    country: string;
+  };
+  clientAddress: {
+    street: string;
+    city: string;
+    postCode: string;
+    country: string;
+  };
+  items: {
+    name: string;
+    quantity: number;
+    price: number;
+    total: number;
+  }[];
+  total: number;
+};
+
 function App() {
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
 
-const[invoices, setInvoices] = useState([])
-
-useEffect(() => {
-  axios.get("http://localhost:3000/invoice")
-  .then(response => setInvoices(response.data))
-  .catch(error => console.error(error))
-},[])
-invoices.length > 0 ? console.log(invoices) : []
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/invoice")
+      .then((response) => setInvoices(response.data))
+      .catch((error) => console.error(error));
+  }, []);
   return (
     <div>
       <div className="container">
@@ -42,12 +73,28 @@ invoices.length > 0 ? console.log(invoices) : []
               </select>
             </div>
             <div>
-               <select name="Sort by" id="">
+              <select name="Sort by" id="">
                 <option value="">Sort by</option>
               </select>
-              </div>
+            </div>
             <button>New Invoice</button>
           </div>
+          <a href="#">
+            <div className="invoices">
+              {invoices &&
+                invoices.map((invoice) => {
+                  return (
+                    <div className="invoice">
+                      <p>{invoice.id}</p>
+                      <p>Due {invoice.paymentDue}</p>
+                      <p>{invoice.clientName}</p>
+                      <p>${invoice.items.map(item => item?.price)}</p>
+                      <button>{invoice.status}</button>
+                    </div>
+                  );
+                })}
+            </div>
+          </a>
         </div>
       </div>
     </div>
