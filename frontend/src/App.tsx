@@ -1,4 +1,15 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 function App() {
+
+const[invoices, setInvoices] = useState([])
+
+useEffect(() => {
+  axios.get("http://localhost:3000/invoice")
+  .then(response => setInvoices(response.data))
+  .catch(error => console.error(error))
+},[])
+invoices.length > 0 ? console.log(invoices) : []
   return (
     <div>
       <div className="container">
@@ -19,14 +30,22 @@ function App() {
             </div>
           </div>
         </div>
-        <div className="main">
-          <div className="main-navbar">
+        <div className="dashboard">
+          <div className="dashboard-header">
             <div>
               <h1>Invoices</h1>
               <p>There are 8 total invoices </p>
             </div>
-            <div></div>
-            <div></div>
+            <div>
+              <select name="Filter by status" id="">
+                <option value="">Filter by status</option>
+              </select>
+            </div>
+            <div>
+               <select name="Sort by" id="">
+                <option value="">Sort by</option>
+              </select>
+              </div>
             <button>New Invoice</button>
           </div>
         </div>

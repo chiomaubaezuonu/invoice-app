@@ -9,7 +9,7 @@
   display: flex;
 }
 .sidebar {
-  width: 6.5em;
+  width: 6.5rem;
   height: 100vh;
   background-color: #373b53;
   border-radius: 0rem 1.53846rem 1.53846rem 0rem;
@@ -83,17 +83,18 @@
   width: 2.7rem;
   border-radius: 50%;
 }
-.main {
-  margin: 0 13.888rem;
-  background: #000;
-  margin: 0 auto;
+.dashboard {
+  flex:1 ;
+  width: 100%;
+  margin-left: 6.5rem;
+  padding: 5rem 21.8rem; 
 }
-.main-navbar {
+.dashboard-header {
   display: flex;
-  padding-top: 6rem;
-  margin: 0 auto;
+  /* padding-top: 6rem; */
   align-items: center;
-  gap: 0 3rem;
+ margin-top: 4.875;
+  width: 100%;
 }
 
 @media screen and (max-width: 768px) {
