@@ -97,6 +97,31 @@
 a {
   text-decoration: none;
 }
+.no-invoice-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  padding-top: 6.25rem;
+}
+.no-invoice-title {
+  color: #0c0e16;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.438rem;
+  margin-top: 4.125rem;
+}
+.no-invoice-text {
+  color: #888eb0;
+  font-weight: 500;
+  font-size: 0.813rem;
+  line-height: 0.938rem;
+  letter-spacing: -0.006rem;
+  width: 12rem;
+  text-align: center;
+}
 .invoices {
 }
 .invoice {
@@ -123,12 +148,52 @@ a {
   margin-bottom: 2.4rem;
   cursor: pointer;
 }
-.invoiceDetail-header{
-      background-color: var(--box-bg);
-    padding: 1.5rem 2.5rem;
-    box-shadow: 0 10px 10px -10px #48549f1a;
-    display: flex;
+.invoiceDetail-header {
+  background-color: var(--box-bg);
+  padding: 1.5rem 2.5rem;
+  box-shadow: 0 10px 10px -10px #48549f1a;
+  display: flex;
+  justify-content: space-between;
 }
+.btns {
+  display: flex;
+  gap: 0 0.62rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.delete-btn {
+  background-color: #ec5555;
+  height: 3.69231rem;
+  border-radius: 6.25rem;
+  border: 0;
+  font-size: 1.15385rem;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.15s linear;
+  padding: 0.62rem;
+}
+.edit-btn {
+  color: #7e88c4;
+  height: 3.69231rem;
+  border-radius: 100px;
+  border: 0;
+  font-size: 1.15385rem;
+  color: var(--white);
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.15s linear;
+  padding: 0.62rem;
+}
+
+
 @media screen and (max-width: 768px) {
   .sidebar {
     width: 100%;

@@ -1,10 +1,10 @@
+import { Divider } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export type Invoice = {
   id: string;
-  // _id?: string;
   _id: string;
   createdAt: string;
   paymentDue: string;
@@ -35,6 +35,7 @@ export type Invoice = {
 };
 function Dashboard() {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   useEffect(() => {
     axios
@@ -79,33 +80,58 @@ function Dashboard() {
                 <option value="">Sort by</option>
               </select>
             </div>
-            <button>New Invoice</button>
+            <button onClick={() => setIsFormOpen(!isFormOpen)}>
+              New Invoice
+            </button>
           </div>
-          {/* <a href="#"> */}
-          <div className="invoices">
-            {invoices &&
-              invoices.map((invoice) => {
-                return (
-                  <Link key={invoice._id} to={`/invoice/${invoice._id}`}>
-                    <div
-                      key={invoice._id}
-                      className="invoice"
-                      // onClick={() => handleInvoice(invoice._id)}
-                    >
-                      <p>{invoice.id}</p>
-                      <p>Due {invoice.paymentDue}</p>
-                      <p>{invoice.clientName}</p>
-                      <p>${invoice.items.map((item) => item?.price)}</p>
-                      <button>{invoice.status}</button>
-                      <div>
-                        <img src="/images/arrow-right.svg" alt="right-arrow" />
+          {invoices.length === 0 ? (
+            <div className="no-invoice-div">
+              <img
+                src="/images/illustration-empty.svg"
+                alt="illustration-empty"
+              />
+              <h2 className="no-invoice-title">There is nothing here</h2>
+              <p className="no-invoice-text">
+                Create an invoice by clicking the New Invoice button and get
+                started
+              </p>
+            </div>
+          ) : (
+            <div className="invoices">
+              {invoices &&
+                invoices.map((invoice) => {
+                  return (
+                    <Link key={invoice._id} to={`/invoice/${invoice._id}`}>
+                      <div key={invoice._id} className="invoice">
+                        <p>{invoice.id}</p>
+                        <p>Due {invoice.paymentDue}</p>
+                        <p>{invoice.clientName}</p>
+                        <p>${invoice.items.map((item) => item?.price)}</p>
+                        <button>{invoice.status}</button>
+                        <div>
+                          <img
+                            src="/images/arrow-right.svg"
+                            alt="right-arrow"
+                          />
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                );
-              })}
-          </div>
-          {/* </a> */}
+                    </Link>
+                  );
+                })}
+            </div>
+          )}
+          {isFormOpen && (
+            <div className={`invoice-form-div${isFormOpen ? " open" : ""}`}>
+              <form action="">
+              <h2>Create Form</h2>
+              <h4 className="form-subText">Bill From</h4>
+              <div className="form-input-grp-col">
+                <label className="form-label-grp" htmlFor="streetAddress">Street Address</label>
+                <input type="text" placeholder="street address" required />
+              </div>
+              </form>
+            </div>
+          )}
         </div>
       </div>
     </div>
