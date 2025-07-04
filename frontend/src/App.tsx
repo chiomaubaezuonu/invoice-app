@@ -7,7 +7,7 @@ const App = () => {
    <Routes>
     <Route path='/' element={<Dashboard/>} />
     <Route path='/invoice/:id' element={<InvoiceDetail />} />
-   </Routes>
+   </Routes>  
   )
 }
 

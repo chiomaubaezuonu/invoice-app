@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import type { DatePickerProps } from "antd";
 import { DatePicker, Space } from "antd";
+import { useGlobalContext } from "./globalContext";
 
 export type Invoice = {
   id: string;
@@ -36,7 +37,10 @@ export type Invoice = {
 };
 function Dashboard() {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  // const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const { isFormOpen, setIsFormOpen, toggleTheme, theme, setTheme } =
+    useGlobalContext();
   const [formData, setFormdata] = useState({
     clientName: "",
     paymentDue: "",
@@ -58,18 +62,9 @@ function Dashboard() {
     console.log(date, dateString);
   };
   const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
+    alert("clicked");
     e.preventDefault();
     axios.post("http://localhost:3000/invoice", formData);
-
-    // setFormdata({
-    //   clientName: "",
-    //   paymentDue: "",
-    //   streetAddress: "",
-    //   projectDescription: "",
-    //   description: "",
-    //   paymentTerms: 0,
-    //   clientEmail: "",
-    // });
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -78,6 +73,7 @@ function Dashboard() {
       [name]: value,
     }));
   };
+  console.log(invoices);
 
   return (
     <div>
@@ -88,18 +84,28 @@ function Dashboard() {
           </div>
           <div className="sidebar-content-div">
             <div className="moon-div">
-              <img
-                src="/images/icon-moon.svg"
-                className="moon-img"
-                alt="moon"
-              />
+              {theme ? (
+                <img
+                  src="/images/icon-moon.svg"
+                  className="moon-img"
+                  alt="moon"
+                  onClick={() => toggleTheme()}
+                />
+              ) : (
+                <img
+                  src="/images/icon-sun.svg"
+                  className="sun-img"
+                  alt="sun"
+                  onClick={() => toggleTheme()}
+                />
+              )}
             </div>
             <div className="user-div">
               <img src="/images/user.jpg" alt="user" className="user-img" />
             </div>
           </div>
         </div>
-        <div className="dashboard">
+        <div className={theme ? "dashboard" : "darkTheme"}>
           <div className="dashboard-header">
             <div>
               <h1>Invoices</h1>
