@@ -25,21 +25,44 @@ app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`);
 });
 
-app.get("/invoice/:id", async(req, res) => {
+app.get("/invoice/:id", async (req, res) => {
   try {
-    const { id } = req.params
-    const invoice = await Invoice.findById(id)
+    const { id } = req.params;
+    const invoice = await Invoice.findById(id);
 
-    if(!invoice){
-      return res.status(404).json({message: "Invoice not found"})
+    if (!invoice) {
+      return res.status(404).json({ message: "Invoice not found" });
     }
-    res.status(200).json(invoice)
+    res.status(200).json(invoice);
   } catch (error) {
-   res.status(500).json({message: "Something went wrong", error: error.message})
+    res
+      .status(500)
+      .json({ message: "Something went wrong", error: error.message });
   }
-} )
+});
 
 app.post("/invoice", async (req, res) => {
+  function generateRandomCode() {
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const digits = "0123456789";
+
+    // Pick 2 random capital letters
+    const randomLetters = Array.from(
+      { length: 2 },
+      () => letters[Math.floor(Math.random() * letters.length)]
+    ).join("");
+
+    // Pick 4 random digits
+    const randomDigits = Array.from(
+      { length: 4 },
+      () => digits[Math.floor(Math.random() * digits.length)]
+    ).join("");
+
+    return randomLetters + randomDigits;
+  }
+  if (!req.body.id) {
+    req.body.id = generateRandomCode();
+  }
   try {
     const newInvoiceData = req.body;
     const savedInvoice = await Invoice.create(newInvoiceData);
@@ -54,7 +77,6 @@ app.post("/invoice", async (req, res) => {
     });
   }
 });
-
 
 app.put("/invoice/:id", async (req, res) => {
   const invoiceId = req.params.id;
@@ -84,7 +106,7 @@ app.put("/invoice/:id", async (req, res) => {
 });
 
 //for delete request
-app.delete('/invoice/:id', async (req, res) => {
+app.delete("/invoice/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -96,13 +118,12 @@ app.delete('/invoice/:id', async (req, res) => {
 
     res.status(200).json({
       message: "Invoice deleted successfully",
-      invoice: deletedInvoice
+      invoice: deletedInvoice,
     });
   } catch (error) {
     res.status(500).json({
       message: "Something went wrong",
-      error: error.message
+      error: error.message,
     });
   }
 });
-

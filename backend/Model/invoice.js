@@ -1,47 +1,10 @@
-// import mongoose from "mongoose";
-// const InvoiceSchema = new mongoose.Schema({
-//   id: String,
-//   createdAt: String,
-//   paymentDue: String,
-//   description: String,
-//   paymentTerms: Number,
-//   clientName: String,
-//   clientEmail: String,
-//   status: String,
-//   senderAddress: {
-//     street: String,
-//     city: String,
-//     postCode: String,
-//     country: String,
-//   },
-//   clientAddress: {
-//     street: String,
-//     city: String,
-//     postCode: String,
-//     country: String,
-//   },
-//   items: [
-//     {
-//       name: String,
-//       quantity: Number,
-//       price: Number,
-//       total: Number,
-//     },
-//   ],
-//   total: Number,
-// }, 
-// {timestamps: true});
-
-// export const Invoice = mongoose.model("Invoice", InvoiceSchema, "invoice");
-
-
 import mongoose from "mongoose";
 
 const InvoiceSchema = new mongoose.Schema({
   id: {
     type: String,
-    required: true,
-    unique: true,
+    // required: true,
+    // unique: true,
   },
   createdAt: {
     type: String,
@@ -49,15 +12,15 @@ const InvoiceSchema = new mongoose.Schema({
   },
   paymentDue: {
     type: String,
-    required: true,
+    // required: true,
   },
   description: {
     type: String,
-    required: true,
+    // required: true,
   },
   paymentTerms: {
     type: Number,
-    required: true,
+    // required: true,
   },
   clientName: {
     type: String,
@@ -94,7 +57,7 @@ const InvoiceSchema = new mongoose.Schema({
   ],
   total: {
     type: Number,
-    required: true,
+    // required: true,
   },
 }, { timestamps: true });
 
