@@ -3,6 +3,10 @@
   margin: 0;
   box-sizing: border-box;
 }
+body {
+  font-family: "League Spartan", sans-serif;
+  font-optical-sizing: auto;
+}
 .container {
   position: relative;
   width: 100%;
@@ -69,7 +73,8 @@
   display: flex;
   justify-content: center;
 }
-.moon-img, .sun-img{
+.moon-img,
+.sun-img {
   width: 1.25rem;
   cursor: pointer;
 }
@@ -91,7 +96,7 @@
   margin: 0 auto;
   padding: 0.615rem 21.8rem;
 }
-.darkTheme{
+.darkTheme {
   background-color: #1e2139;
 }
 .dashboard-header {
@@ -151,7 +156,32 @@ a {
   transition: transform 0.15s ease-in;
   padding: 1.25rem 1.85rem;
 }
+.invoice .hash {
+  font-size: 0.938rem;
+  color: #7e88c4;
+  font-weight: 700;
+}
+.invoice-id {
+  color: #141624;
+  font-size: 0.938rem;
+  font-weight: 700;
+}
+.payment-date {
+  color: #888eaf;
+  font-size: 0.813rem;
+}
+.clientsNames {
+  padding-left: 2.438rem;
+  color: #858BB2;
+}
 .invoice-detail-container {
+  /* min-height: 100vh; */
+  display: flex;
+  justify-content: center;
+  margin-left: 8rem;
+  background-color: #f9f9fb;
+}
+.single-invoice {
   margin-top: 5rem;
   width: 56.15385rem;
   padding: 1.85rem;
@@ -166,11 +196,41 @@ a {
   cursor: pointer;
 }
 .invoiceDetail-header {
-  background-color: var(--box-bg);
+  background-color: white;
   padding: 1.5rem 2.5rem;
-  box-shadow: 0 10px 10px -10px #48549f1a;
+  box-shadow: 0 0.625rem 0.625rem -0.625rem #48549f1a;
   display: flex;
   justify-content: space-between;
+}
+.status-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0 1.65rem;
+}
+.status-title {
+  color: #888eaf;
+}
+.dot-status-div {
+  display: flex;
+  font-weight: 700;
+  background-color: #33d7a00d;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1.5rem;
+  border-radius: 0.46154rem;
+}
+.dot {
+  background-color: #33d7a0;
+  margin-right: 0.62rem;
+  width: 0.65rem;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+}
+.invoice-status {
+  font-size: 0.813rem;
+  color: #33d7a0;
+  text-transform: capitalize;
 }
 .btns {
   display: flex;
@@ -178,13 +238,13 @@ a {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  margin-left: auto;
 }
 .delete-btn {
-  background-color: #ec5555;
-  height: 3.69231rem;
   border-radius: 6.25rem;
   border: 0;
-  font-size: 1.15385rem;
+  font-size: 0.975rem;
+  background-color: #ec5555;
   color: white;
   font-weight: 700;
   cursor: pointer;
@@ -192,22 +252,45 @@ a {
   align-items: center;
   justify-content: center;
   transition: 0.15s linear;
-  padding: 0.62rem;
+  padding: 0.99231rem 1.6rem;
+}
+.delete-btn:hover {
+  background-color: #ec5555cc;
 }
 .edit-btn {
+  background-color: #fbfbfe;
   color: #7e88c4;
-  height: 3.69231rem;
   border-radius: 100px;
   border: 0;
-  font-size: 1.15385rem;
-  color: var(--white);
+  font-size: 0.938rem;
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: 0.15s linear;
-  padding: 0.62rem;
+  padding: 0.89231rem 1.5rem;
+}
+.edit-btn:hover {
+  background-color: #e0e4fa;
+  color: #7e88c4;
+}
+.mark-paid-btn {
+  border-radius: 6.25rem;
+  border: 0;
+  background-color: #7b5cfa;
+  font-size: 0.938rem;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.15s linear;
+  padding: 1rem 1.42rem;
+}
+.mark-paid-btn:hover {
+  background-color: #9175ff;
 }
 
 .invoice-form-div {
@@ -229,6 +312,7 @@ a {
   transform: translateX(-100%);
   transition: transform 2s ease-in-out;
   z-index: 200;
+  position: fixed;
 }
 
 .invoice-form-div.open {
@@ -341,25 +425,70 @@ input::placeholder {
   margin: 1.85rem 0;
   padding: 3.85rem;
   border-radius: 0.5rem;
-  /* background-color: white; */
+  background-color: white;
 }
 .sender-info {
   display: flex;
   justify-content: space-between;
 }
+.hash {
+  color: #888eaf;
+}
+.id {
+  font-weight: 700;
+  font-size: 0.938rem;
+  color: #141624;
+}
+.invoice-desc {
+  color: #7e88c4;
+  font-weight: 500;
+  font-size: 0.813rem;
+  margin-top: 0.5rem;
+  margin-bottom: 3.5rem;
+}
 .sender-address {
+  display: flex;
+  flex-direction: column;
   color: #7e88c4;
   text-align: right;
+  font-size: 0.813rem;
+  gap: 0.4rem;
 }
-.client-info {
+.client-info-div {
   display: flex;
   justify-content: space-between;
   padding-right: 10rem;
 }
-.bill-to {
+.date-div {
+  /* font-size: 0.813rem; */
+}
+.date-div-text {
+  color: #7e88c4;
+}
+.client-info {
+  margin-top: 0.813rem;
+  font-size: 0.938rem;
+  font-weight: 700;
+}
+.payment-due-wrapper {
+  margin-top: 2.3rem;
+}
+.payment-due {
+  font-weight: 700;
+  font-size: 0.938rem;
+  margin-top: 1rem;
+}
+.bill-to-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.client-address {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  color: #7e88c4;
+  font-size: 0.813rem;
 }
 .item-wrapper {
   background-color: #fbfbfe;
