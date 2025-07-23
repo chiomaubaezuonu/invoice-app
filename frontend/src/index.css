@@ -7,10 +7,18 @@ body {
   font-family: "League Spartan", sans-serif;
   font-optical-sizing: auto;
 }
+.app {
+  width: 100%;
+}
 .container {
   position: relative;
   width: 100%;
   display: flex;
+  margin-left: 6.5rem; /* same as .sidebar width */
+  width: calc(100% - 6.5rem);
+  justify-content: center;
+  /* background-color: #f9f9fb;
+  background-color: pink; */
 }
 .sidebar {
   width: 6.5rem;
@@ -90,11 +98,17 @@ body {
   border-radius: 50%;
 }
 .dashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   flex: 1;
   width: 100%;
-  margin-left: 6.5rem;
   margin: 0 auto;
-  padding: 0.615rem 21.8rem;
+  background-color: #f9f9fb;
+}
+.main {
+  width: 62.5%;
 }
 .darkTheme {
   background-color: #1e2139;
@@ -102,11 +116,8 @@ body {
 .dashboard-header {
   display: flex;
   padding: 3.563rem 0;
-  width: 100%;
   padding-top: 6rem;
-  margin: 0 auto;
   align-items: center;
-  justify-content: center;
   gap: 0 3rem;
 }
 .dashboard-header h1 {
@@ -145,17 +156,26 @@ a {
   text-align: center;
 }
 .invoices {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem 0;
+  padding: 5rem 0;
 }
+
 .invoice {
-  width: 56.15rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 10px 10px -10px #48549f1a;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 0 12px rgba(72, 84, 159, 0.1);
   display: grid;
   grid-template-columns: repeat(4, 1fr) repeat(2, 0.8fr) 0.4fr;
   cursor: pointer;
+  border-radius: 0.5rem;
   transition: transform 0.15s ease-in;
-  padding: 1.25rem 1.85rem;
+  padding: 1.016rem 1.503rem;
 }
+
 .invoice .hash {
   font-size: 0.938rem;
   color: #7e88c4;
@@ -172,14 +192,16 @@ a {
 }
 .clientsNames {
   padding-left: 2.438rem;
-  color: #858BB2;
+  color: #858bb2;
 }
 .invoice-detail-container {
   /* min-height: 100vh; */
   display: flex;
   justify-content: center;
   margin-left: 8rem;
-  background-color: #f9f9fb;
+  /* background-color: #f9f9fb; */
+  width: 100%;
+  /* background-color: red; */
 }
 .single-invoice {
   margin-top: 5rem;
@@ -256,6 +278,7 @@ a {
 }
 .delete-btn:hover {
   background-color: #ec5555cc;
+  transform: scale(1.01);
 }
 .edit-btn {
   background-color: #fbfbfe;
@@ -274,6 +297,7 @@ a {
 .edit-btn:hover {
   background-color: #e0e4fa;
   color: #7e88c4;
+  transform: scale(1.01);
 }
 .mark-paid-btn {
   border-radius: 6.25rem;
@@ -291,6 +315,62 @@ a {
 }
 .mark-paid-btn:hover {
   background-color: #9175ff;
+}
+
+.ant-modal .ant-modal-content {
+  padding: 3.169rem 2.925rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  width: 30rem;
+  height: 15.181rem;
+}
+.modal-text {
+  font-size: 0.813rem;
+  padding: 0.813rem 0;
+  color: #888eaf;
+}
+.ant-modal .ant-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.ant-btn-variant-outlined {
+  background-color: #fbfbfe;
+  color: #7e88c4;
+  border-radius: 100px;
+  border: 0;
+  font-size: 0.938rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.15s linear;
+  padding: 1.42rem;
+}
+
+.ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
+  background-color: #e0e4fa;
+  color: #7e88c4;
+  transform: scale(1.01);
+}
+.ant-btn-variant-solid {
+  border-radius: 6.25rem;
+  border: 0;
+  font-size: 0.938rem;
+  background-color: #ec5555;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.15s linear;
+  padding: 1.504rem;
+}
+.ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover {
+  background-color: #ec5555cc;
+  transform: scale(1.01);
 }
 
 .invoice-form-div {

@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 
 const App = () => {
   return (
-    <div>
+    <div className="app" >
       <Sidebar />
       <Routes>
         <Route path="/" element={<Dashboard />} />

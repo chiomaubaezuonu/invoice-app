@@ -132,8 +132,8 @@ function Dashboard() {
   };
 
   return (
-    <div>
-      <div className="container">
+    <div className="dashboard">
+      <div className={`container ${theme ? "" : " darkTheme"}`}>
         {/* <Sidebar /> */}
         {isFormOpen && (
           <div className={`invoice-form-div ${isFormOpen ? " open" : ""}`}>
@@ -375,7 +375,7 @@ function Dashboard() {
             </form>
           </div>
         )}
-        <div className={theme ? "dashboard" : "darkTheme"}>
+        <div className="main">
           <div className="dashboard-header">
             <div>
               <h1>Invoices</h1>
@@ -412,7 +412,7 @@ function Dashboard() {
               {invoices &&
                 invoices.map((invoice) => {
                   return (
-                    <Link key={invoice._id} to={`/invoice/${invoice._id}`}>
+                    <Link className="link" key={invoice._id} to={`/invoice/${invoice._id}`}>
                       <div key={invoice._id} className="invoice">
                         <p className="invoice-id">
                           <span className="hash">#</span>

@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import type { Invoice } from "./Dashboard";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -10,15 +10,14 @@ const InvoiceDetail = () => {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { isFormOpen, setIsFormOpen } = useGlobalContext();
+  const { isFormOpen, setIsFormOpen, theme } = useGlobalContext();
+
+  const navigate = useNavigate()
 
   const showModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
 
   const updateInvoice = () => {
     setIsFormOpen(!isFormOpen);
@@ -32,15 +31,19 @@ const InvoiceDetail = () => {
     }
   };
 
-  const handleCancel = async () => {
-    setIsModalOpen(false);
+  const handleDelete = async () => {
+    if(!invoice) return;
+    setIsModalOpen(true);
     if (!invoice?._id) return;
 
     try {
       await axios.delete(`https://invoice-app-4x3d.onrender.com/invoice/${id}`);
+      setIsModalOpen(false)
+      navigate("/")
     } catch (error) {
       console.error(error);
     }
+
   };
   const { id } = useParams();
   useEffect(() => {
@@ -71,11 +74,10 @@ const InvoiceDetail = () => {
             <button
               className="edit-btn"
               onClick={updateInvoice}
-              // onClick={handleOk}
             >
               Edit
             </button>
-            <button className="delete-btn" onClick={handleCancel}>
+            <button className="delete-btn" onClick={() => setIsModalOpen(true)}>
               delete
             </button>
             {invoice?.status !== "paid" && (
@@ -162,20 +164,20 @@ const InvoiceDetail = () => {
         </div>
         <>
           <Modal
-            title="Basic Modal"
-            closable={{ "aria-label": "Custom Close Button" }}
+            closable={false}
+            centered={true}
             open={isModalOpen}
-            onOk={handleOk}
-            onCancel={handleCancel}
+            onOk={handleDelete}
+            okText = "Delete"
+            onCancel={() =>setIsModalOpen(false)}
           >
             <h2>Confirm Deletion</h2>
-            <p>
-              Are you sure you want delete invoice{" "}
+            <p className="modal-text">
+              Are you sure you want delete invoice {" "}
               <span style={{ fontWeight: "700" }}>
-                {invoice?.id} .This action cannot be undone.
-              </span>
+                #{invoice?.id}.</span> This action cannot be undone.
+              
             </p>
-            <p>Some contents...</p>
           </Modal>
         </>
         <div></div>
