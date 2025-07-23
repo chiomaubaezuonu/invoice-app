@@ -1,5 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import type { Invoice } from "./Dashboard";
+// import type { Invoice } from "./Dashboard";
+import { Invoice } from "./globalContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Modal } from "antd";
@@ -10,7 +11,7 @@ const InvoiceDetail = () => {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { isFormOpen, setIsFormOpen, theme } = useGlobalContext();
+  const { isFormOpen, setIsFormOpen, theme, onChange } = useGlobalContext();
 
   const navigate = useNavigate()
 
@@ -54,6 +55,7 @@ const InvoiceDetail = () => {
         .catch((error) => console.error(error));
     }
   }, [id]);
+  
 
   return (
     <div className="invoice-detail-container">

@@ -5,74 +5,15 @@ import type { DatePickerProps } from "antd";
 import { DatePicker, Space } from "antd";
 import { useGlobalContext } from "./globalContext";
 import dayjs from "dayjs";
+import { Invoice } from "./globalContext";
 
-export type Invoice = {
-  id?: string;
-  _id?: string;
-  createdAt: string;
-  paymentDue: string;
-  description: string;
-  paymentTerms: number;
-  clientName: string;
-  clientEmail: string;
-  status: "draft" | "pending" | "paid";
-  senderAddress: {
-    street: string;
-    city: string;
-    postCode: string;
-    country: string;
-  };
-  clientAddress: {
-    street: string;
-    city: string;
-    postCode: string;
-    country: string;
-  };
-  items: {
-    name: string;
-    quantity: number;
-    price: number;
-    total: number;
-  }[];
-  total: number;
-};
 function Dashboard() {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
-  // const [isFormOpen, setIsFormOpen] = useState(false);
 
-  const { isFormOpen, setIsFormOpen, theme } =
+  const { isFormOpen, setIsFormOpen, theme, formData, setFormData, onChange } =
     useGlobalContext();
 
-  const [formData, setFormdata] = useState<Invoice>({
-    createdAt: "",
-    paymentDue: "",
-    description: "",
-    paymentTerms: 0,
-    clientName: "",
-    clientEmail: "",
-    status: "draft",
-    senderAddress: {
-      street: "",
-      city: "",
-      postCode: "",
-      country: "",
-    },
-    clientAddress: {
-      street: "",
-      city: "",
-      postCode: "",
-      country: "",
-    },
-    items: [
-      {
-        name: "",
-        quantity: 0,
-        price: 0,
-        total: 0,
-      },
-    ],
-    total: 0,
-  });
+  
 
   useEffect(() => {
     axios
@@ -81,18 +22,21 @@ function Dashboard() {
       .catch((error) => console.error(error));
   }, []);
 
-  const onChange: DatePickerProps["onChange"] = (date, dateString) => {
-    console.log(date, dateString);
-    // if (date) {
-    //   const formatted = date.format("MMM D, YYYY");
-    //   setPaymentDue(formatted);
-    // }
-  };
+  // const onChange: DatePickerProps["onChange"] = (date, dateString) => {
+  //   console.log(date, dateString);
+  //   if (typeof dateString === "string") {
+  //     const formatted = dayjs(dateString).format("MMM D, YYYY");
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       paymentDue: formatted,
+  //     }));
+  //   }
+  // };
   const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
     alert("clicked");
     e.preventDefault();
     axios.post("https://invoice-app-4x3d.onrender.com/invoice", formData);
-    setFormdata({
+    setFormData({
       createdAt: "",
       paymentDue: "",
       description: "",
@@ -125,7 +69,7 @@ function Dashboard() {
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormdata((prev) => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -306,7 +250,7 @@ function Dashboard() {
                         <input
                           value={item.name}
                           onChange={(e) =>
-                            setFormdata({
+                            setFormData({
                               ...formData,
                               items: formData.items.map((itm, i) =>
                                 i === index
@@ -329,7 +273,7 @@ function Dashboard() {
                           placeholder="project description"
                           value={item.quantity}
                           onChange={(e) =>
-                            setFormdata({
+                            setFormData({
                               ...formData,
                               items: formData.items.map((itm, i) =>
                                 i === index
@@ -349,7 +293,7 @@ function Dashboard() {
                           placeholder="project description"
                           value={item.price}
                           onChange={(e) =>
-                            setFormdata({
+                            setFormData({
                               ...formData,
                               items: formData.items.map((itm, i) =>
                                 i === index
@@ -412,7 +356,11 @@ function Dashboard() {
               {invoices &&
                 invoices.map((invoice) => {
                   return (
-                    <Link className="link" key={invoice._id} to={`/invoice/${invoice._id}`}>
+                    <Link
+                      className="link"
+                      key={invoice._id}
+                      to={`/invoice/${invoice._id}`}
+                    >
                       <div key={invoice._id} className="invoice">
                         <p className="invoice-id">
                           <span className="hash">#</span>
