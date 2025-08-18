@@ -1,0 +1,11 @@
+##Make dashboard-header responsive
+Look up screen breakpoints
+#Make. dashboard cover screen 
+## Add 2.251rem padding to .dashboard-header 
+##Reduce the size of the open-form-btn on .dashboard-header
+##Inspect what's causing white background overflow on the app for mobile
+Put .invoice contents on required containers
+Modify mobile-invoice-left and right for smaller screen
+##Convert prices on invoiceDetail page into 2 decimal places
+Change the cartet-color for input in index.ccs fields
+Remove btngroups from form tag in form files

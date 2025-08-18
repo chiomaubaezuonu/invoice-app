@@ -1,0 +1,89 @@
+
+html {
+    scroll-behavior: smooth;
+    font-size: 100%;
+}
+html {
+  font-size: clamp(0.813rem, 1.2vw, 2.25rem);
+}
+
+@media (max-width: 1180px) {
+    html {
+        font-size: 120%;
+    }
+}
+
+@media (max-width: 1080px) {
+    html {
+        font-size: 112%;
+    }
+}
+
+@media (max-width: 980px) {
+    html {
+        font-size: 104%;
+    }
+}
+
+@media (max-width: 850px) {
+    html {
+    
+        font-size: 96%;
+    }
+}
+
+@media (max-width: 768px) {
+    html {
+       
+        font-size: 88%;
+    }
+}
+
+@media (max-width: 600px) {
+    html {
+        
+        font-size:80%;
+    }
+}
+
+@media (min-width: 1500px) {
+    html {
+        font-size: 150%;
+    }
+}
+
+@media (min-width: 1700px) {
+    html {
+        font-size: 160%;
+    }
+}
+
+
+@media (min-width: 2000px) {
+    html {
+        font-size: 175%;
+    }
+}
+
+@media (min-width: 2500px) {
+    html {
+        font-size: 185%;
+    }
+} 
+
+
+ 
+
+body {
+    font-size: 0.9375rem;
+    
+}
+
+svg {
+    fill: currentColor;
+}  
+/* html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  } */

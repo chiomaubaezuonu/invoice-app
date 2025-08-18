@@ -1,10 +1,11 @@
-import { DatePickerProps } from "antd";
+import { DatePickerProps, theme } from "antd";
 import dayjs from "dayjs";
 import {
   createContext,
   FunctionComponent,
   ReactNode,
   useContext,
+  useEffect,
   useState,
 } from "react";
 
@@ -32,8 +33,8 @@ export type Invoice = {
   };
   items: {
     name: string;
-    quantity: number;
-    price: number;
+    quantity: string;
+    price: string;
     total: number;
   }[];
   total: number;
@@ -47,15 +48,21 @@ interface GlobalContextType {
   toggleTheme: () => void;
   formData: Invoice
   setFormData: React.Dispatch<React.SetStateAction<Invoice>>,
-  onChange: DatePickerProps["onChange"]
+  onChange: DatePickerProps["onChange"],
+  openForm: () => void
 }
+const savedTheme = localStorage.getItem("theme")
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 
 export const GlobalProvider: FunctionComponent<{ children: ReactNode }> = ({
   children,
 }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [theme, setTheme] = useState(false);
+  const [theme, setTheme] = useState(savedTheme ? JSON.parse(savedTheme): false);
+
+  useEffect(() => {
+ localStorage.setItem("theme", JSON.stringify(theme))
+},[theme])
 
   const [formData, setFormData] = useState<Invoice>({
     createdAt: "",
@@ -80,8 +87,8 @@ export const GlobalProvider: FunctionComponent<{ children: ReactNode }> = ({
     items: [
       {
         name: "",
-        quantity: 0,
-        price: 0,
+        quantity: "",
+        price: "",
         total: 0,
       },
     ],
@@ -91,6 +98,9 @@ export const GlobalProvider: FunctionComponent<{ children: ReactNode }> = ({
   const toggleTheme = () => {
     setTheme(!theme);
   };
+  const openForm = () => {
+    setIsFormOpen(true)
+  }
    const onChange: DatePickerProps["onChange"] = (date, dateString) => {
       console.log(date, dateString);
       if (typeof dateString === "string") {
@@ -113,7 +123,8 @@ export const GlobalProvider: FunctionComponent<{ children: ReactNode }> = ({
         toggleTheme,
         formData,
         setFormData,
-        onChange
+        onChange,
+        openForm
       }}
     >
       {children}
