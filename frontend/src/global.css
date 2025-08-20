@@ -9,13 +9,13 @@ html {
 
 @media (max-width: 1180px) {
     html {
-        font-size: 120%;
+        font-size: 110%;
     }
 }
 
 @media (max-width: 1080px) {
     html {
-        font-size: 112%;
+        font-size: 100%;
     }
 }
 
@@ -45,29 +45,33 @@ html {
         font-size:80%;
     }
 }
-
+@media (min-width: 1200px) {
+    html {
+        font-size: 100%;
+    }
+}
 @media (min-width: 1500px) {
     html {
-        font-size: 150%;
+        font-size: 110%;
     }
 }
 
 @media (min-width: 1700px) {
     html {
-        font-size: 160%;
+        font-size: 120%;
     }
 }
 
 
 @media (min-width: 2000px) {
     html {
-        font-size: 175%;
+        font-size: 130%;
     }
 }
 
 @media (min-width: 2500px) {
     html {
-        font-size: 185%;
+        font-size: 140%;
     }
 } 
 

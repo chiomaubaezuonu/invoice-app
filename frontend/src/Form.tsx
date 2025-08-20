@@ -7,7 +7,7 @@ const Form = () => {
   const [newItemInput, setNewItemInput] = useState<number[]>([1]);
 
   const [showPymtOptions, setShowPymtOptions] = useState(false);
-  const { formData, setFormData, isFormOpen, onChange, setIsFormOpen } =
+  const { formData, setFormData, isFormOpen, onChange, setIsFormOpen, theme } =
     useGlobalContext();
 
   const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,7 +20,7 @@ const Form = () => {
       paymentTerms: 0,
       clientName: "",
       clientEmail: "",
-      status: "draft",
+      status: "Draft",
       senderAddress: {
         street: "",
         city: "",
@@ -58,13 +58,17 @@ const Form = () => {
   return (
     <div>
       {isFormOpen && (
-        <div className={`invoice-form-div ${isFormOpen ? " open" : ""}`}>
+        <div
+          className={`invoice-form-div ${
+            isFormOpen ? "invoice-form-div--open" : ""
+          } ${!theme ? "invoice-form-div--darkTheme" : ""}`}
+        >
           <form onSubmit={handleForm}>
             <h2>Create Form</h2>
             <h4 className="form-subText">Bill From</h4>
             <div className="scrollable-form-contents">
               <div className="form-input-grp-col">
-                <label className="form-label-grp" htmlFor="streetAddress">
+                <label className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`} htmlFor="streetAddress">
                   Street Address
                 </label>
                 <input
@@ -79,18 +83,18 @@ const Form = () => {
                     })
                   }
                   type="text"
-                  className="input"
+                  className={`input ${!theme ? "input--darkTheme" : ""}`}
                   placeholder="street address"
                   required
                 />
               </div>
               <div className="form-input-grp-row">
                 <div className="form-row-div">
-                  <label htmlFor="city" className="form-label-grp">
+                  <label htmlFor="city" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
                     City
                   </label>
                   <input
-                    className="input"
+                    className={`input ${!theme ? "input--darkTheme" : ""}`}
                     value={formData.senderAddress.city}
                     onChange={(e) =>
                       setFormData((prev) => ({
@@ -107,11 +111,11 @@ const Form = () => {
                   />
                 </div>
                 <div className="form-row-div">
-                  <label htmlFor="post-code" className="form-label-grp">
+                  <label htmlFor="post-code" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
                     Post Code
                   </label>
                   <input
-                    className="input"
+                    className={`input ${!theme ? "input--darkTheme" : ""}`}
                     value={formData.senderAddress.postCode}
                     onChange={(e) =>
                       setFormData({
@@ -128,11 +132,11 @@ const Form = () => {
                   />
                 </div>
                 <div className="form-row-div">
-                  <label htmlFor="country" className="form-label-grp">
+                  <label htmlFor="country" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
                     Country
                   </label>
                   <input
-                    className="input"
+                    className={`input ${!theme ? "input--darkTheme" : ""}`}
                     value={formData.senderAddress.country}
                     onChange={(e) =>
                       setFormData({
@@ -152,42 +156,42 @@ const Form = () => {
               <div className="form-client-info">
                 <h4 className="form-subText">Bill To</h4>
                 <div className="form-input-grp-col">
-                  <label className="form-label-grp" htmlFor="streetAddress">
+                  <label htmlFor="streetAddress" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
                     Client's Name
                   </label>
                   <input
                     name="clientName"
                     value={formData.clientName}
                     type="text"
-                    className="input"
+                    className={`input ${!theme ? "input--darkTheme" : ""}`}
                     placeholder="client's name"
                     onChange={handleInputChange}
                     required
                   />
                 </div>
                 <div className="form-input-grp-col">
-                  <label className="form-label-grp" htmlFor="clientEmail">
+                  <label htmlFor="clientEmail" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
                     Client's Email
                   </label>
                   <input
                     name="clientEmail"
                     value={formData.clientEmail}
                     type="text"
-                    className="input"
+                    className={`input ${!theme ? "input--darkTheme" : ""}`}
                     placeholder="Client's email"
                     onChange={handleInputChange}
                     required
                   />
                 </div>
                 <div className="form-input-grp-col">
-                  <label className="form-label-grp" htmlFor="clientEmail">
+                  <label htmlFor="clientEmail" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
                     Street Address
                   </label>
                   <input
                     name="streetAddress"
                     value={formData.clientAddress.street}
                     type="text"
-                    className="input"
+                    className={`input ${!theme ? "input--darkTheme" : ""}`}
                     placeholder="street address"
                     onChange={(e) =>
                       setFormData((prev) => ({
@@ -203,11 +207,11 @@ const Form = () => {
                 </div>
                 <div className="form-input-grp-row">
                   <div className="form-row-div">
-                    <label htmlFor="city" className="form-label-grp">
+                    <label htmlFor="city" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
                       City
                     </label>
                     <input
-                      className="input"
+                      className={`input ${!theme ? "input--darkTheme" : ""}`}
                       value={formData.clientAddress.city}
                       type="text"
                       placeholder="city"
@@ -224,11 +228,11 @@ const Form = () => {
                     />
                   </div>
                   <div className="form-row-div">
-                    <label htmlFor="post-code" className="form-label-grp">
+                    <label htmlFor="post-code" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
                       Post Code
                     </label>
                     <input
-                      className="input"
+                      className={`input ${!theme ? "input--darkTheme" : ""}`}
                       value={formData.clientAddress.postCode}
                       onChange={(e) =>
                         setFormData({
@@ -245,11 +249,11 @@ const Form = () => {
                     />
                   </div>
                   <div className="form-row-div">
-                    <label htmlFor="country" className="form-label-grp">
+                    <label htmlFor="country" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
                       Country
                     </label>
                     <input
-                      className="input"
+                      className={`input ${!theme ? "input--darkTheme" : ""}`}
                       value={formData.clientAddress.country}
                       onChange={(e) =>
                         setFormData({
@@ -271,7 +275,7 @@ const Form = () => {
                 <div className="form-row-div">
                   <label htmlFor="invoiceDate">Invoice Date</label>
                   <Space direction="vertical">
-                    <DatePicker
+                    <DatePicker className={`ant-picker-outlined ${!theme ? "ant-picker-outlined--darkTheme" : ""}`}
                       value={
                         formData.paymentDue
                           ? dayjs(formData.paymentDue)
@@ -330,7 +334,7 @@ const Form = () => {
                 </div>
               </div>
               <div className="form-input-grp-col">
-                <label className="form-label-grp" htmlFor="project-desc">
+                <label htmlFor="project-desc" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
                   Project Description
                 </label>
                 <input
@@ -338,7 +342,7 @@ const Form = () => {
                   onChange={handleInputChange}
                   name="description"
                   type="text"
-                  className="input"
+                  className={`input ${!theme ? "input--darkTheme" : ""}`}
                   placeholder="project description"
                   required
                 />
@@ -372,7 +376,9 @@ const Form = () => {
                                     })
                                   }
                                   type="text"
-                                  className="item-name-input"
+                                  className={`item-input ${
+                                    !theme ? "item-input--darkTheme" : ""
+                                  }`}
                                   required
                                 />
                               </div>
@@ -393,7 +399,9 @@ const Form = () => {
                                     })
                                   }
                                   type="text"
-                                  className="item-name-input"
+                                  className={`item-input ${
+                                    !theme ? "item-input--darkTheme" : ""
+                                  }`}
                                   required
                                 />
                               </div>
@@ -411,7 +419,9 @@ const Form = () => {
                                     })
                                   }
                                   type="text"
-                                  className="item-name-input"
+                                  className={`item-input ${
+                                    !theme ? "item-input--darkTheme" : ""
+                                  }`}
                                   required
                                 />
                               </div>
@@ -455,7 +465,7 @@ const Form = () => {
                             })
                           }
                           type="text"
-                          className="item-name-input"
+                          className="item-input"
                           required
                         />
                       </div>
@@ -528,16 +538,16 @@ const Form = () => {
                 })}
               </div>
               <button
-                className="add-new-item-btn"
+                className={`add-new-item-btn ${!theme ? "add-new-item-btn--darkTheme" : ""}`}
                 type="button"
                 onClick={handleNewItem}
               >
                 + Add New Item
               </button>
             </div>
-            <div className="form-btns-grp">
+            <div className={`form-btns-grp ${!theme ? "form-btns-grp--darkTheme" : ""}`}>
               <button
-                className="discard-btn"
+                className={`discard-btn ${!theme ? "discard-btn--darkTheme" : ""}`}
                 onClick={() => setIsFormOpen(false)}
               >
                 Discard

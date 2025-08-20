@@ -8,4 +8,4 @@
 
 // export default Test
 
-// improve invoice alignment and layout, ensure consistent widths, and enhance responsive styles
+// Added responsive Root Font Sizing, improved invoice alignment and layout, ensured consistent widths, and enhanced responsive styles.

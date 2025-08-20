@@ -18,7 +18,7 @@ export type Invoice = {
   paymentTerms: number;
   clientName: string;
   clientEmail: string;
-  status: "draft" | "pending" | "paid";
+  status: "Draft" | "Pending" | "Paid";
   senderAddress: {
     street: string;
     city: string;
@@ -71,7 +71,7 @@ export const GlobalProvider: FunctionComponent<{ children: ReactNode }> = ({
     paymentTerms: 0,
     clientName: "",
     clientEmail: "",
-    status: "draft",
+    status: "Draft",
     senderAddress: {
       street: "",
       city: "",

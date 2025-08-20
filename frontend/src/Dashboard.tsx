@@ -110,28 +110,143 @@ function Dashboard() {
   };
 
   return (
-   
-      <div className={`container ${theme ? "" : " darkTheme"}`}>
-        <div className= "dashboard">
-          {/* <Sidebar /> */}
-          <div className="main">
-            <div className="dashboard-header">
-              <div>
-                <h1>Invoices</h1>
-                <p className="invoice-length">
-                  There are {invoices.length} total invoices{" "}
-                </p>
+    <div className={`container ${!theme ? "container--darkTheme" : ""}`}>
+      <div className="dashboard">
+        {/* <Sidebar /> */}
+        <div className="main">
+          <div className="dashboard-header">
+            <div>
+              <h1>Invoices</h1>
+              <p className="invoice-length">
+                There are {invoices.length} total invoices{" "}
+              </p>
+            </div>
+            <div className="sortBy-wrapper">
+              <div
+                className="caret-div"
+                onClick={() => setStatusDropdown(!statusDropdown)}
+              >
+                <p className="sortBy-title">Filter by status</p>
+                <img
+                  src="/images/icon-caret-down.svg"
+                  className={`caret ${statusDropdown ? " clicked" : ""}`}
+                  alt="icon-caret-down"
+                />
               </div>
-              <div className="sortBy-wrapper">
+              {statusDropdown && (
+                <div className="dropdown-div">
+                  <div className="dropdown-contents">
+                    <div className="checkbox-div">
+                      <input
+                        type="checkbox"
+                        name="draft"
+                        checked={checkedStatus.draft}
+                        onChange={handleStatusCheckbox}
+                      />
+                      <p>Draft</p>
+                    </div>
+                    <div className="checkbox-div">
+                      <input
+                        type="checkbox"
+                        name="pending"
+                        checked={checkedStatus.pending}
+                        onChange={handleStatusCheckbox}
+                      />
+                      <p>Pending</p>
+                    </div>
+                    <div className="checkbox-div">
+                      <input
+                        type="checkbox"
+                        name="paid"
+                        checked={checkedStatus.paid}
+                        onChange={handleStatusCheckbox}
+                      />
+                      <p>Paid</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="sortBy-wrapper">
+              <div
+                className="caret-div"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
+                <p className="sortBy-title">Sort By</p>
+                <img
+                  src="/images/icon-caret-down.svg"
+                  className={`caret ${isDropdownOpen ? " clicked" : ""}`}
+                  alt="icon-caret-down"
+                />
+              </div>
+              {isDropdownOpen && (
+                <div className="dropdown-div">
+                  <div className="dropdown-contents">
+                    <div className="checkbox-div">
+                      <input
+                        type="checkbox"
+                        name="name"
+                        checked={checkedBox.name}
+                        onChange={handleCheckbox}
+                      />
+                      <p>Name</p>
+                    </div>
+                    <div className="checkbox-div">
+                      <input
+                        type="checkbox"
+                        name="status"
+                        checked={checkedBox.status}
+                        onChange={handleCheckbox}
+                      />
+                      <p>Status</p>
+                    </div>
+                    <div className="checkbox-div">
+                      <input
+                        type="checkbox"
+                        name="dueDate"
+                        checked={checkedBox.dueDate}
+                        onChange={handleCheckbox}
+                      />
+                      <p>Due Date</p>
+                    </div>
+                    <div className="checkbox-div">
+                      <input
+                        type="checkbox"
+                        name="total"
+                        checked={checkedBox.total}
+                        onChange={handleCheckbox}
+                      />
+                      <p>Total</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <button className="open-form-btn" onClick={openForm}>
+              <div className="plus-icon-div">
+                <img src="/images/plus-icon.svg" alt="plus" />
+              </div>
+              <span> New Invoice</span>
+            </button>
+          </div>
+          <div className="mobile-dashboard-header">
+            <div style={{ marginRight: "auto" }}>
+              <h1>Invoices</h1>
+              <p className="invoice-length">
+                There are {invoices.length} total invoices{" "}
+              </p>
+            </div>
+            <div className="sortBy-wrapper">
+              <div>
                 <div
                   className="caret-div"
                   onClick={() => setStatusDropdown(!statusDropdown)}
                 >
-                  <p className="sortBy-title">Filter by status</p>
                   <img
-                    src="/images/icon-caret-down.svg"
-                    className={`caret ${statusDropdown ? " clicked" : ""}`}
-                    alt="icon-caret-down"
+                    className="filter-icon"
+                    src="/images/filter-icon.svg"
+                    alt="filter"
                   />
                 </div>
                 {statusDropdown && (
@@ -168,301 +283,184 @@ function Dashboard() {
                   </div>
                 )}
               </div>
-              <div className="sortBy-wrapper">
-                <div
-                  className="caret-div"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                >
-                  <p className="sortBy-title">Sort By</p>
-                  <img
-                    src="/images/icon-caret-down.svg"
-                    className={`caret ${isDropdownOpen ? " clicked" : ""}`}
-                    alt="icon-caret-down"
-                  />
-                </div>
-                {isDropdownOpen && (
-                  <div className="dropdown-div">
-                    <div className="dropdown-contents">
-                      <div className="checkbox-div">
-                        <input
-                          type="checkbox"
-                          name="name"
-                          checked={checkedBox.name}
-                          onChange={handleCheckbox}
-                        />
-                        <p>Name</p>
-                      </div>
-                      <div className="checkbox-div">
-                        <input
-                          type="checkbox"
-                          name="status"
-                          checked={checkedBox.status}
-                          onChange={handleCheckbox}
-                        />
-                        <p>Status</p>
-                      </div>
-                      <div className="checkbox-div">
-                        <input
-                          type="checkbox"
-                          name="dueDate"
-                          checked={checkedBox.dueDate}
-                          onChange={handleCheckbox}
-                        />
-                        <p>Due Date</p>
-                      </div>
-                      <div className="checkbox-div">
-                        <input
-                          type="checkbox"
-                          name="total"
-                          checked={checkedBox.total}
-                          onChange={handleCheckbox}
-                        />
-                        <p>Total</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <button className="open-form-btn" onClick={openForm}>
-                <div className="plus-icon-div">
-                  <img src="/images/plus-icon.svg" alt="plus" />
-                </div>
-                <span> New Invoice</span>
-              </button>
             </div>
-            <div className="mobile-dashboard-header">
-              <div style={{ marginRight: "auto" }}>
-                <h1>Invoices</h1>
-                <p className="invoice-length">
-                  There are {invoices.length} total invoices{" "}
-                </p>
-              </div>
-              <div className="sortBy-wrapper">
-                <div>
-                  <div
-                    className="caret-div"
-                    onClick={() => setStatusDropdown(!statusDropdown)}
-                  >
-                    <img
-                      className="filter-icon"
-                      src="/images/filter-icon.svg"
-                      alt="filter"
-                    />
-                  </div>
-                  {statusDropdown && (
-                    <div className="dropdown-div">
-                      <div className="dropdown-contents">
-                        <div className="checkbox-div">
-                          <input
-                            type="checkbox"
-                            name="draft"
-                            checked={checkedStatus.draft}
-                            onChange={handleStatusCheckbox}
-                          />
-                          <p>Draft</p>
-                        </div>
-                        <div className="checkbox-div">
-                          <input
-                            type="checkbox"
-                            name="pending"
-                            checked={checkedStatus.pending}
-                            onChange={handleStatusCheckbox}
-                          />
-                          <p>Pending</p>
-                        </div>
-                        <div className="checkbox-div">
-                          <input
-                            type="checkbox"
-                            name="paid"
-                            checked={checkedStatus.paid}
-                            onChange={handleStatusCheckbox}
-                          />
-                          <p>Paid</p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="sortBy-wrapper">
-                <div
-                  className="caret-div"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                >
-                  <img
-                    className="filter-icon"
-                    src="/images/dropdown.svg"
-                    alt="dropdown"
-                  />
-                </div>
-                {isDropdownOpen && (
-                  <div className="dropdown-div">
-                    <div className="dropdown-contents">
-                      <div className="checkbox-div">
-                        <input
-                          type="checkbox"
-                          name="name"
-                          checked={checkedBox.name}
-                          onChange={handleCheckbox}
-                        />
-                        <p>Name</p>
-                      </div>
-                      <div className="checkbox-div">
-                        <input
-                          type="checkbox"
-                          name="status"
-                          checked={checkedBox.status}
-                          onChange={handleCheckbox}
-                        />
-                        <p>Status</p>
-                      </div>
-                      <div className="checkbox-div">
-                        <input
-                          type="checkbox"
-                          name="dueDate"
-                          checked={checkedBox.dueDate}
-                          onChange={handleCheckbox}
-                        />
-                        <p>Due Date</p>
-                      </div>
-                      <div className="checkbox-div">
-                        <input
-                          type="checkbox"
-                          name="total"
-                          checked={checkedBox.total}
-                          onChange={handleCheckbox}
-                        />
-                        <p>Total</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <button className="open-form-btn" onClick={openForm}>
-                <div className="plus-icon-div">
-                  <img src="/images/plus-icon.svg" alt="plus" />
-                </div>
-                <span> New</span>
-              </button>
-            </div>
-
-            {invoices.length === 0 ? (
-              <div className="no-invoice-div">
+            <div className="sortBy-wrapper">
+              <div
+                className="caret-div"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
                 <img
-                  src="/images/illustration-empty.svg"
-                  alt="illustration-empty"
+                  className="filter-icon"
+                  src="/images/dropdown.svg"
+                  alt="dropdown"
                 />
-                <h2 className="no-invoice-title">There is nothing here</h2>
-                <p className="no-invoice-text">
-                  Create an invoice by clicking the New Invoice button and get
-                  started
-                </p>
               </div>
-            ) : (
-              <div>
-                <div className="invoices">
-                  {invoices &&
-                    invoices.map((invoice) => {
-                      return (
-                        <Link key={invoice._id} to={`/invoice/${invoice._id}`}>
-                          <div key={invoice._id} className="invoice">
-                            <div className="invoice-left">
-                              <p className="invoice-id">
-                                <span className="hash">#</span>
-                                {invoice.id}
-                              </p>
-                              <p className="payment-date">
-                                Due {invoice.paymentDue}
-                              </p>
-                              <p className="clientsNames">
-                                {invoice.clientName}
-                              </p>
-                            </div>
-                            <div className="invoice-right">
-                              <p className="dashboard-total-price">
-                                $
-                                {invoice.items
-                                  .reduce(
-                                    (acc, item) =>
-                                      acc +
-                                      Number(item?.price) *
-                                        Number(item?.quantity),
-                                    0
-                                  )
-                                  .toFixed(2)}
-                              </p>
-                              <div className="dot-status-div">
-                                <div className="dot"></div>
-                                <span className="invoice-status">
-                                  {invoice?.status}
-                                </span>
-                              </div>
-                              <div>
-                                <img
-                                  src="/images/arrow-right.svg"
-                                  alt="right-arrow"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </Link>
-                      );
-                    })}
+              {isDropdownOpen && (
+                <div className="dropdown-div">
+                  <div className="dropdown-contents">
+                    <div className="checkbox-div">
+                      <input
+                        type="checkbox"
+                        name="name"
+                        checked={checkedBox.name}
+                        onChange={handleCheckbox}
+                      />
+                      <p>Name</p>
+                    </div>
+                    <div className="checkbox-div">
+                      <input
+                        type="checkbox"
+                        name="status"
+                        checked={checkedBox.status}
+                        onChange={handleCheckbox}
+                      />
+                      <p>Status</p>
+                    </div>
+                    <div className="checkbox-div">
+                      <input
+                        type="checkbox"
+                        name="dueDate"
+                        checked={checkedBox.dueDate}
+                        onChange={handleCheckbox}
+                      />
+                      <p>Due Date</p>
+                    </div>
+                    <div className="checkbox-div">
+                      <input
+                        type="checkbox"
+                        name="total"
+                        checked={checkedBox.total}
+                        onChange={handleCheckbox}
+                      />
+                      <p>Total</p>
+                    </div>
+                  </div>
                 </div>
+              )}
+            </div>
 
-                {/* mobile-invoices */}
-                <div className="mobile-invoices">
-                  {invoices &&
-                    invoices.map((invoice) => {
-                      return (
-                        <Link key={invoice._id} to={`/invoice/${invoice._id}`}>
-                          <div key={invoice._id} className="invoice">
-                            <div className="mobile-invoice-left">
-                              <p className="invoice-id">
-                                <span className="hash">#</span>
-                                {invoice.id}
-                              </p>
-                              <p className="payment-date">
-                                Due {invoice.paymentDue}
-                              </p>
-                              <p className="dashboard-total-price">
-                                $
-                                {invoice.items
-                                  .reduce(
-                                    (acc, item) =>
-                                      acc +
-                                      Number(item?.price) *
-                                        Number(item?.quantity),
-                                    0
-                                  )
-                                  .toFixed(2)}
-                              </p>
+            <button className="open-form-btn" onClick={openForm}>
+              <div className="plus-icon-div">
+                <img src="/images/plus-icon.svg" alt="plus" />
+              </div>
+              <span> New</span>
+            </button>
+          </div>
+
+          {invoices.length === 0 ? (
+            <div className="no-invoice-div">
+              <img
+                src="/images/illustration-empty.svg"
+                alt="illustration-empty"
+              />
+              <h2 className="no-invoice-title">There is nothing here</h2>
+              <p className="no-invoice-text">
+                Create an invoice by clicking the New Invoice button and get
+                started
+              </p>
+            </div>
+          ) : (
+            <div>
+              <div className="invoices">
+                {invoices &&
+                  invoices.map((invoice) => {
+                    return (
+                      <Link key={invoice._id} to={`/invoice/${invoice._id}`}>
+                        <div key={invoice._id} className="invoice">
+                          <div className="invoice-left">
+                            <p className="invoice-id">
+                              <span className="hash">#</span>
+                              {invoice.id}
+                            </p>
+                            <p className="payment-date">
+                              Due {invoice.paymentDue}
+                            </p>
+                            <p className="clientsNames">{invoice.clientName}</p>
+                          </div>
+                          <div className="invoice-right">
+                            <p className="dashboard-total-price">
+                              $
+                              {invoice.items
+                                .reduce(
+                                  (acc, item) =>
+                                    acc +
+                                    Number(item?.price) *
+                                      Number(item?.quantity),
+                                  0
+                                )
+                                .toFixed(2)}
+                            </p>
+                            <div
+                              className={`status status--${invoice?.status.toLowerCase()}`}
+                            >
+                              <div className="status__dot"></div>
+                              <span className="status__label">
+                                {invoice?.status}
+                              </span>
                             </div>
-                            <div className="mobile-invoice-right">
-                              <p className="clientsNames">
-                                {invoice.clientName}
-                              </p>
-                              <div className="dot-status-div">
-                                <div className="dot"></div>
-                                <span className="invoice-status">
-                                  {invoice?.status}
-                                </span>
-                              </div>
+
+                            <div>
+                              <img
+                                src="/images/arrow-right.svg"
+                                alt="right-arrow"
+                              />
                             </div>
                           </div>
-                        </Link>
-                      );
-                    })}
-                </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
               </div>
-            )}
-            {isFormOpen && <Form />}
-          </div>
-          {/* <Link to="/test" style={{backgroundColor:"purple"}}>Click</Link> */}
+
+              {/* mobile-invoices */}
+              <div className="mobile-invoices">
+                {invoices &&
+                  invoices.map((invoice) => {
+                    return (
+                      <Link key={invoice._id} to={`/invoice/${invoice._id}`}>
+                        <div key={invoice._id} className="invoice">
+                          <div className="mobile-invoice-left">
+                            <p className="invoice-id">
+                              <span className="hash">#</span>
+                              {invoice.id}
+                            </p>
+                            <p className="payment-date">
+                              Due {invoice.paymentDue}
+                            </p>
+                            <p className="dashboard-total-price">
+                              $
+                              {invoice.items
+                                .reduce(
+                                  (acc, item) =>
+                                    acc +
+                                    Number(item?.price) *
+                                      Number(item?.quantity),
+                                  0
+                                )
+                                .toFixed(2)}
+                            </p>
+                          </div>
+                          <div className="mobile-invoice-right">
+                            <p className="clientsNames">{invoice.clientName}</p>
+                            <div className="dot-status-div">
+                              <div className="dot"></div>
+                              <span className="invoice-status">
+                                {invoice?.status}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
+              </div>
+            </div>
+          )}
+          {isFormOpen && <Form />}
         </div>
+        {/* <Link to="/test" style={{backgroundColor:"purple"}}>Click</Link> */}
       </div>
+    </div>
   );
 }
 

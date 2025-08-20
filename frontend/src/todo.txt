@@ -9,3 +9,4 @@ Modify mobile-invoice-left and right for smaller screen
 ##Convert prices on invoiceDetail page into 2 decimal places
 Change the cartet-color for input in index.ccs fields
 Remove btngroups from form tag in form files
+change datepicker theme
