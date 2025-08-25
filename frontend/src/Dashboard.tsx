@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useGlobalContext } from "./globalContext";
@@ -8,25 +8,35 @@ import Form from "./Form";
 
 function Dashboard() {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const originalInvoice = useRef<Invoice[] | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [statusDropdown, setStatusDropdown] = useState(false);
+  // const [checkedBox, setCheckedBox] = useState({
+  //   name: false,
+  //   status: false,
+  //   dueDate: false,
+  //   total: false,
+  // });
   const [checkedBox, setCheckedBox] = useState({
-    name: false,
-    status: false,
-    dueDate: false,
-    total: false,
-  });
-  const [checkedStatus, setCheckedStatus] = useState({
     draft: false,
     pending: false,
     paid: false,
+    name: false,
+    status: false,
+    duedate: false,
+    total: false,
   });
   const { isFormOpen, theme, openForm } = useGlobalContext();
 
   useEffect(() => {
     axios
       .get("https://invoice-app-4x3d.onrender.com/invoice")
-      .then((response) => setInvoices(response.data))
+      .then((response) => {
+        setInvoices(response.data);
+        if (originalInvoice.current === null) {
+          originalInvoice.current = response.data;
+        }
+      })
       .catch((error) => console.error(error));
   }, []);
 
@@ -92,23 +102,46 @@ function Dashboard() {
   //       [name]: value,
   //     }));
   //    }
-  //   }
 
   const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name } = e.target;
+    const { name, checked } = e.target;
     setCheckedBox((prev) => ({
       ...prev,
       [name]: e.target.checked,
     }));
-  };
-  const handleStatusCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name } = e.target;
-    setCheckedStatus((prev) => ({
-      ...prev,
-      [name]: e.target.checked,
-    }));
+
+    // If the "name" checkbox is clicked, sort invoices
+    if (name === "name" && checked) {
+      setInvoices((prev) =>
+        [...prev].sort((a, b) => a.clientName.localeCompare(b.clientName))
+      );
+    }
+    // if (name === "status" && checked) {
+    //   setInvoices((prev) => {
+    //     [...prev].sort((a, b) => a.status.localeCompare(b.status));
+    //   });
+    // }
+    if (name === "name" && !checked) {
+      if (originalInvoice.current) {
+        setInvoices(originalInvoice.current);
+      }
+    }
   };
 
+  // const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   alert("clicked");
+  //   const { name } = e.target;
+  //   setCheckedStatus((prev) => ({
+  //     ...prev,
+  //      [name]: e.target.checked,
+  //   }));
+
+  // };
+
+  // const handleFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   alert("Checked")
+
+  // }
   return (
     <div className={`container ${!theme ? "container--darkTheme" : ""}`}>
       <div className="dashboard">
@@ -140,8 +173,8 @@ function Dashboard() {
                       <input
                         type="checkbox"
                         name="draft"
-                        checked={checkedStatus.draft}
-                        onChange={handleStatusCheckbox}
+                        checked={checkedBox.draft}
+                        onChange={handleCheckbox}
                       />
                       <p>Draft</p>
                     </div>
@@ -149,8 +182,8 @@ function Dashboard() {
                       <input
                         type="checkbox"
                         name="pending"
-                        checked={checkedStatus.pending}
-                        onChange={handleStatusCheckbox}
+                        checked={checkedBox.pending}
+                        onChange={handleCheckbox}
                       />
                       <p>Pending</p>
                     </div>
@@ -158,8 +191,8 @@ function Dashboard() {
                       <input
                         type="checkbox"
                         name="paid"
-                        checked={checkedStatus.paid}
-                        onChange={handleStatusCheckbox}
+                        checked={checkedBox.paid}
+                        onChange={handleCheckbox}
                       />
                       <p>Paid</p>
                     </div>
@@ -187,6 +220,7 @@ function Dashboard() {
                         type="checkbox"
                         name="name"
                         checked={checkedBox.name}
+                        // onChange={handleCheckbox}
                         onChange={handleCheckbox}
                       />
                       <p>Name</p>
@@ -204,7 +238,7 @@ function Dashboard() {
                       <input
                         type="checkbox"
                         name="dueDate"
-                        checked={checkedBox.dueDate}
+                        checked={checkedBox.duedate}
                         onChange={handleCheckbox}
                       />
                       <p>Due Date</p>
@@ -256,8 +290,8 @@ function Dashboard() {
                         <input
                           type="checkbox"
                           name="draft"
-                          checked={checkedStatus.draft}
-                          onChange={handleStatusCheckbox}
+                          checked={checkedBox.draft}
+                          onChange={handleCheckbox}
                         />
                         <p>Draft</p>
                       </div>
@@ -265,8 +299,8 @@ function Dashboard() {
                         <input
                           type="checkbox"
                           name="pending"
-                          checked={checkedStatus.pending}
-                          onChange={handleStatusCheckbox}
+                          checked={checkedBox.pending}
+                          onChange={handleCheckbox}
                         />
                         <p>Pending</p>
                       </div>
@@ -274,8 +308,8 @@ function Dashboard() {
                         <input
                           type="checkbox"
                           name="paid"
-                          checked={checkedStatus.paid}
-                          onChange={handleStatusCheckbox}
+                          checked={checkedBox.paid}
+                          onChange={handleCheckbox}
                         />
                         <p>Paid</p>
                       </div>
@@ -298,14 +332,17 @@ function Dashboard() {
               {isDropdownOpen && (
                 <div className="dropdown-div">
                   <div className="dropdown-contents">
-                    <div className="checkbox-div">
+                    <div
+                      className="checkbox-div"
+                      style={{ backgroundColor: "green" }}
+                    >
                       <input
                         type="checkbox"
                         name="name"
                         checked={checkedBox.name}
                         onChange={handleCheckbox}
                       />
-                      <p>Name</p>
+                      <label htmlFor="name">Name</label>
                     </div>
                     <div className="checkbox-div">
                       <input
@@ -320,7 +357,7 @@ function Dashboard() {
                       <input
                         type="checkbox"
                         name="dueDate"
-                        checked={checkedBox.dueDate}
+                        checked={checkedBox.duedate}
                         onChange={handleCheckbox}
                       />
                       <p>Due Date</p>

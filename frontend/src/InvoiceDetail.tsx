@@ -3,22 +3,20 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Invoice } from "./globalContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 import { useGlobalContext } from "./globalContext";
-import Item from "antd/es/list/Item";
 
 const InvoiceDetail = () => {
   const [invoice, setInvoice] = useState<Invoice | null>(null);
-  const [invoices, setInvoices] = useState<Invoice[]>([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { isFormOpen, setIsFormOpen, theme, onChange } = useGlobalContext();
+  const { setIsFormOpen } = useGlobalContext();
 
   const navigate = useNavigate();
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+  // const showModal = () => {
+  //   setIsModalOpen(true);
+  // };
 
   const updateInvoice = () => {
     setIsFormOpen(true);
@@ -83,9 +81,9 @@ const InvoiceDetail = () => {
               >
                 delete
               </button>
-              {invoice?.status !== "paid" && (
+              {/* {invoice?.status !== "paid" && (
                 <button className="mark-paid-btn">Mark as Paid</button>
-              )}
+              )} */}
             </div>
           </div>
           <div className="invoice-detail-div">
@@ -175,15 +173,19 @@ const InvoiceDetail = () => {
                           <td className="mobile-totalPrice">$ {item.price}</td>
                         </tr>
                         <tr>
-                          <td className="mobile-item-qty">{item.quantity} x $ {item.price}</td>
+                          <td className="mobile-item-qty">
+                            {item.quantity} x $ {item.price}
+                          </td>
                         </tr>
                         <tr>
                           <td className="_itemName_8sg6q_291">{item.name}</td>
 
-                          <td className="totalOfItem">$  {item.price}</td>
+                          <td className="totalOfItem">$ {item.price}</td>
                         </tr>
                         <tr>
-                          <td className="_quantity_8sg6q_303">{item.quantity} x $ {item.price}</td>
+                          <td className="_quantity_8sg6q_303">
+                            {item.quantity} x $ {item.price}
+                          </td>
                         </tr>
                       </tbody>
                     );
@@ -246,9 +248,9 @@ const InvoiceDetail = () => {
         <button className="delete-btn" onClick={() => setIsModalOpen(true)}>
           delete
         </button>
-        {invoice?.status !== "paid" && (
+        {/* {invoice?.status !== "paid" && (
           <button className="mark-paid-btn">Mark as Paid</button>
-        )}
+        )} */}
       </div>
     </div>
   );

@@ -9,4 +9,7 @@ Modify mobile-invoice-left and right for smaller screen
 ##Convert prices on invoiceDetail page into 2 decimal places
 Change the cartet-color for input in index.ccs fields
 Remove btngroups from form tag in form files
-change datepicker theme
+##change datepicker theme
+Make yhe whole checkbox div clickable
+ask chatgpt why bg applied to checkbox div is not applied in line 334 dashboard file.
+Before continuing, read up chatgpt explanation on multiple sorting

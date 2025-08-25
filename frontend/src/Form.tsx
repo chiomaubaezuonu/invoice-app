@@ -2,7 +2,7 @@ import axios from "axios";
 import { useGlobalContext } from "./globalContext";
 import { DatePicker, Space } from "antd";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 const Form = () => {
   const [newItemInput, setNewItemInput] = useState<number[]>([1]);
 

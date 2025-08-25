@@ -9,3 +9,4 @@
 // export default Test
 
 // Added responsive Root Font Sizing, improved invoice alignment and layout, ensured consistent widths, and enhanced responsive styles.
+// apply BEM class naming for invoice form & fix dark theme input styling
