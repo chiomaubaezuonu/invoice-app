@@ -2,7 +2,7 @@ import axios from "axios";
 import { useGlobalContext } from "./globalContext";
 import { DatePicker, Space } from "antd";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const Form = () => {
   const [newItemInput, setNewItemInput] = useState<number[]>([1]);
 
@@ -50,7 +50,19 @@ const Form = () => {
       ...prev,
       [name]: value,
     }));
+    // const invoicesWithTotals = formData.items.map((invoice) => ({
+    //   ...invoice,
+    //   total: invoice.items.reduce(
+    //     (acc, item) => acc + Number(item.price) * Number(item.quantity),
+    //     0
+    //   ),
+    // }));
+
+    // setInvoices(invoicesWithTotals);
   };
+
+console.log(formData)
+
   const handleNewItem = () => {
     setNewItemInput((prev) => [...prev, prev.length]);
   };
@@ -68,7 +80,12 @@ const Form = () => {
             <h4 className="form-subText">Bill From</h4>
             <div className="scrollable-form-contents">
               <div className="form-input-grp-col">
-                <label className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`} htmlFor="streetAddress">
+                <label
+                  className={`form-label-grp ${
+                    !theme ? "form-label-grp--darkTheme" : ""
+                  }`}
+                  htmlFor="streetAddress"
+                >
                   Street Address
                 </label>
                 <input
@@ -90,7 +107,12 @@ const Form = () => {
               </div>
               <div className="form-input-grp-row">
                 <div className="form-row-div">
-                  <label htmlFor="city" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
+                  <label
+                    htmlFor="city"
+                    className={`form-label-grp ${
+                      !theme ? "form-label-grp--darkTheme" : ""
+                    }`}
+                  >
                     City
                   </label>
                   <input
@@ -111,7 +133,12 @@ const Form = () => {
                   />
                 </div>
                 <div className="form-row-div">
-                  <label htmlFor="post-code" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
+                  <label
+                    htmlFor="post-code"
+                    className={`form-label-grp ${
+                      !theme ? "form-label-grp--darkTheme" : ""
+                    }`}
+                  >
                     Post Code
                   </label>
                   <input
@@ -132,7 +159,12 @@ const Form = () => {
                   />
                 </div>
                 <div className="form-row-div">
-                  <label htmlFor="country" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
+                  <label
+                    htmlFor="country"
+                    className={`form-label-grp ${
+                      !theme ? "form-label-grp--darkTheme" : ""
+                    }`}
+                  >
                     Country
                   </label>
                   <input
@@ -156,7 +188,12 @@ const Form = () => {
               <div className="form-client-info">
                 <h4 className="form-subText">Bill To</h4>
                 <div className="form-input-grp-col">
-                  <label htmlFor="streetAddress" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
+                  <label
+                    htmlFor="streetAddress"
+                    className={`form-label-grp ${
+                      !theme ? "form-label-grp--darkTheme" : ""
+                    }`}
+                  >
                     Client's Name
                   </label>
                   <input
@@ -170,7 +207,12 @@ const Form = () => {
                   />
                 </div>
                 <div className="form-input-grp-col">
-                  <label htmlFor="clientEmail" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
+                  <label
+                    htmlFor="clientEmail"
+                    className={`form-label-grp ${
+                      !theme ? "form-label-grp--darkTheme" : ""
+                    }`}
+                  >
                     Client's Email
                   </label>
                   <input
@@ -184,7 +226,12 @@ const Form = () => {
                   />
                 </div>
                 <div className="form-input-grp-col">
-                  <label htmlFor="clientEmail" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
+                  <label
+                    htmlFor="clientEmail"
+                    className={`form-label-grp ${
+                      !theme ? "form-label-grp--darkTheme" : ""
+                    }`}
+                  >
                     Street Address
                   </label>
                   <input
@@ -207,7 +254,12 @@ const Form = () => {
                 </div>
                 <div className="form-input-grp-row">
                   <div className="form-row-div">
-                    <label htmlFor="city" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
+                    <label
+                      htmlFor="city"
+                      className={`form-label-grp ${
+                        !theme ? "form-label-grp--darkTheme" : ""
+                      }`}
+                    >
                       City
                     </label>
                     <input
@@ -228,7 +280,12 @@ const Form = () => {
                     />
                   </div>
                   <div className="form-row-div">
-                    <label htmlFor="post-code" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
+                    <label
+                      htmlFor="post-code"
+                      className={`form-label-grp ${
+                        !theme ? "form-label-grp--darkTheme" : ""
+                      }`}
+                    >
                       Post Code
                     </label>
                     <input
@@ -249,7 +306,12 @@ const Form = () => {
                     />
                   </div>
                   <div className="form-row-div">
-                    <label htmlFor="country" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
+                    <label
+                      htmlFor="country"
+                      className={`form-label-grp ${
+                        !theme ? "form-label-grp--darkTheme" : ""
+                      }`}
+                    >
                       Country
                     </label>
                     <input
@@ -275,7 +337,10 @@ const Form = () => {
                 <div className="form-row-div">
                   <label htmlFor="invoiceDate">Invoice Date</label>
                   <Space direction="vertical">
-                    <DatePicker className={`ant-picker-outlined ${!theme ? "ant-picker-outlined--darkTheme" : ""}`}
+                    <DatePicker
+                      className={`ant-picker-outlined ${
+                        !theme ? "ant-picker-outlined--darkTheme" : ""
+                      }`}
                       value={
                         formData.paymentDue
                           ? dayjs(formData.paymentDue)
@@ -334,7 +399,12 @@ const Form = () => {
                 </div>
               </div>
               <div className="form-input-grp-col">
-                <label htmlFor="project-desc" className={`form-label-grp ${!theme? "form-label-grp--darkTheme" : ""}`}>
+                <label
+                  htmlFor="project-desc"
+                  className={`form-label-grp ${
+                    !theme ? "form-label-grp--darkTheme" : ""
+                  }`}
+                >
                   Project Description
                 </label>
                 <input
@@ -538,16 +608,24 @@ const Form = () => {
                 })}
               </div>
               <button
-                className={`add-new-item-btn ${!theme ? "add-new-item-btn--darkTheme" : ""}`}
+                className={`add-new-item-btn ${
+                  !theme ? "add-new-item-btn--darkTheme" : ""
+                }`}
                 type="button"
                 onClick={handleNewItem}
               >
                 + Add New Item
               </button>
             </div>
-            <div className={`form-btns-grp ${!theme ? "form-btns-grp--darkTheme" : ""}`}>
+            <div
+              className={`form-btns-grp ${
+                !theme ? "form-btns-grp--darkTheme" : ""
+              }`}
+            >
               <button
-                className={`discard-btn ${!theme ? "discard-btn--darkTheme" : ""}`}
+                className={`discard-btn ${
+                  !theme ? "discard-btn--darkTheme" : ""
+                }`}
                 onClick={() => setIsFormOpen(false)}
               >
                 Discard

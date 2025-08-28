@@ -196,7 +196,7 @@ const InvoiceDetail = () => {
                 <p className="amount-due">Amount Due</p>
                 <div className="grand-total">Grand Total</div>
                 <span className="total">
-                  ${" "}
+                  $
                   {invoice?.items.map(
                     (item) => Number(item.price) * Number(item.quantity)
                   )}

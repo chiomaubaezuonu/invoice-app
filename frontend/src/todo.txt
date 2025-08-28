@@ -13,3 +13,5 @@ Remove btngroups from form tag in form files
 Make yhe whole checkbox div clickable
 ask chatgpt why bg applied to checkbox div is not applied in line 334 dashboard file.
 Before continuing, read up chatgpt explanation on multiple sorting
+Fix border-right on moon-div for mobile
+Investigate the 500 error after sending form

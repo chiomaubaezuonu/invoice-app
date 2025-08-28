@@ -11,14 +11,8 @@ function Dashboard() {
   const originalInvoice = useRef<Invoice[] | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [statusDropdown, setStatusDropdown] = useState(false);
-  // const [checkedBox, setCheckedBox] = useState({
-  //   name: false,
-  //   status: false,
-  //   dueDate: false,
-  //   total: false,
-  // });
   const [checkedBox, setCheckedBox] = useState({
-    draft: false,
+    Draft: false,
     pending: false,
     paid: false,
     name: false,
@@ -40,108 +34,75 @@ function Dashboard() {
       .catch((error) => console.error(error));
   }, []);
 
-  // const onChange: DatePickerProps["onChange"] = (date, dateString) => {
-  //   console.log(date, dateString);
-  //   if (typeof dateString === "string") {
-  //     const formatted = dayjs(dateString).format("MMM D, YYYY");
-  //     setFormData((prev) => ({
-  //       ...prev,
-  //       paymentDue: formatted,
-  //     }));
-  //   }
-  // };
-  // const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
-  //   alert("clicked");
-  //   e.preventDefault();
-  //   axios.post("https://invoice-app-4x3d.onrender.com/invoice", formData);
-  //   setFormData({
-  //     createdAt: "",
-  //     paymentDue: "",
-  //     description: "",
-  //     paymentTerms: 0,
-  //     clientName: "",
-  //     clientEmail: "",
-  //     status: "draft",
-  //     senderAddress: {
-  //       street: "",
-  //       city: "",
-  //       postCode: "",
-  //       country: "",
-  //     },
-  //     clientAddress: {
-  //       street: "",
-  //       city: "",
-  //       postCode: "",
-  //       country: "",
-  //     },
-  //     items: [
-  //       {
-  //         name: "",
-  //         quantity: 0,
-  //         price: 0,
-  //         total: 0,
-  //       },
-  //     ],
-  //     total: 0,
-  //   });
-  // };
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   if (name.includes(".")) {
-  //     const [parent, child] = name.split(".")
-  //     setFormData((prev) => ({
-  //       ...prev,
-  //       [parent]: {
-  //         ...prev,
-  //         [child]: value,
-  //       },
-  //     }));
-  //      }   else {
-  //     setFormData((prev) => ({
-  //       ...prev,
-  //       [name]: value,
-  //     }));
-  //    }
+  
 
   const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
+
+    // Update the checkbox state
     setCheckedBox((prev) => ({
       ...prev,
-      [name]: e.target.checked,
+      [name]: checked,
     }));
 
-    // If the "name" checkbox is clicked, sort invoices
+    // Create a copy of the invoices to avoid direct state mutation
+    let sortedInvoices = [...invoices];
+
+    // Add the 'total' property to each invoice for sorting
+    sortedInvoices = sortedInvoices.map((invoice) => ({
+      ...invoice,
+      total: invoice.items.reduce(
+        (acc, item) => acc + Number(item.price) * Number(item.quantity),
+        0
+      ),
+    }));
+
+    // Conditionally sort based on the checked checkboxes
     if (name === "name" && checked) {
-      setInvoices((prev) =>
-        [...prev].sort((a, b) => a.clientName.localeCompare(b.clientName))
+      sortedInvoices.sort((a, b) => a.clientName.localeCompare(b.clientName));
+    } else if (name === "status" && checked) {
+      sortedInvoices.sort((a, b) => a.status.localeCompare(b.status));
+    } else if (name === "total" && checked) {
+    } else if (name === "Draft" && checked) {
+      sortedInvoices = sortedInvoices.filter(
+        (invoice) => invoice.status.toLowerCase() === "draft"
       );
+      if (name === "Draft" && !checked) {
+        if (originalInvoice.current) {
+          setInvoices(originalInvoice.current);
+        }
+      }
+    } else if (name === "pending" && checked) {
+      sortedInvoices = sortedInvoices.filter(
+        (invoice) => invoice.status.toLowerCase() === "pending"
+      );
+      if (name === "pending" && !checked) {
+        if (originalInvoice.current) {
+          setInvoices(originalInvoice.current);
+        }
+      }
+    } else if (name === "paid" && checked) {
+      sortedInvoices = sortedInvoices.filter(
+        (invoice) => invoice.status.toLowerCase() === "paid"
+      );
+      if (name === "paid" && !checked) {
+        if (originalInvoice.current) {
+          setInvoices(originalInvoice.current);
+        }
+      }
     }
-    // if (name === "status" && checked) {
-    //   setInvoices((prev) => {
-    //     [...prev].sort((a, b) => a.status.localeCompare(b.status));
-    //   });
-    // }
-    if (name === "name" && !checked) {
+
+    // Handle the 'uncheck' case by resetting to the original list
+    if (!checked) {
       if (originalInvoice.current) {
         setInvoices(originalInvoice.current);
       }
+    } else {
+      // Set the state with the final sorted array
+      setInvoices(sortedInvoices);
     }
   };
 
-  // const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   alert("clicked");
-  //   const { name } = e.target;
-  //   setCheckedStatus((prev) => ({
-  //     ...prev,
-  //      [name]: e.target.checked,
-  //   }));
-
-  // };
-
-  // const handleFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   alert("Checked")
-
-  // }
   return (
     <div className={`container ${!theme ? "container--darkTheme" : ""}`}>
       <div className="dashboard">
@@ -172,8 +133,8 @@ function Dashboard() {
                     <div className="checkbox-div">
                       <input
                         type="checkbox"
-                        name="draft"
-                        checked={checkedBox.draft}
+                        name="Draft"
+                        checked={checkedBox.Draft}
                         onChange={handleCheckbox}
                       />
                       <p>Draft</p>
@@ -267,8 +228,8 @@ function Dashboard() {
           <div className="mobile-dashboard-header">
             <div style={{ marginRight: "auto" }}>
               <h1>Invoices</h1>
-              <p className="invoice-length">
-                There are {invoices.length} total invoices{" "}
+              <p className="mobile-invoice-length">
+                {invoices.length} invoices
               </p>
             </div>
             <div className="sortBy-wrapper">
@@ -289,8 +250,8 @@ function Dashboard() {
                       <div className="checkbox-div">
                         <input
                           type="checkbox"
-                          name="draft"
-                          checked={checkedBox.draft}
+                          name="Draft"
+                          checked={checkedBox.Draft}
                           onChange={handleCheckbox}
                         />
                         <p>Draft</p>
@@ -332,10 +293,7 @@ function Dashboard() {
               {isDropdownOpen && (
                 <div className="dropdown-div">
                   <div className="dropdown-contents">
-                    <div
-                      className="checkbox-div"
-                      style={{ backgroundColor: "green" }}
-                    >
+                    <div className="checkbox-div">
                       <input
                         type="checkbox"
                         name="name"
@@ -416,16 +374,18 @@ function Dashboard() {
                           </div>
                           <div className="invoice-right">
                             <p className="dashboard-total-price">
-                              $
-                              {invoice.items
-                                .reduce(
-                                  (acc, item) =>
+                              {new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                                minimumFractionDigits: 2, // change to 2 if you want cents
+                              }).format(
+                                invoice.items.reduce((acc, item) => {
+                                  return (
                                     acc +
-                                    Number(item?.price) *
-                                      Number(item?.quantity),
-                                  0
-                                )
-                                .toFixed(2)}
+                                    Number(item?.price) * Number(item?.quantity)
+                                  );
+                                }, 0)
+                              )}
                             </p>
                             <div
                               className={`status status--${invoice?.status.toLowerCase()}`}
